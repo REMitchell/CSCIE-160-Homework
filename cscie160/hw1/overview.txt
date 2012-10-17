@@ -1,0 +1,10 @@
+There were few real decisions to make when completing this assignment, as most things were very well spelled-out. However, there were a few design choices I made, mostly concerning tracking passengers and which floors they wanted to get off at:
+
+- I chose to use two variables to represent the number of passengers, although, strictly-speaking, one would have sufficed. One variable, int passengers, represented the total number of passengers currently on the elevator, while int[] stopsArray contained the total number of passengers wanting to get off on a particular floor, using the floor number as the index of the array.
+Notice that the 0 index of this array is unused under this system. I considered using “floor-1” as the index, which would use the array completely, however opted to make the array one element longer than it needed to be, to make things simpler (and who knows -- we may need a basement level at some point)
+Of course, I could take the sum of the elements in int[] stopsArray to get int passengers, however, I felt that the tradeoff of increased memory usage over increased computation time was a fair one, and opted to store the total number of passengers separately.
+
+- Direction is stored as an integer, 1 or -1, rather than a string “up” or “down” or some other representation. This makes it trivial to implement the “move” function (simply add the current floor to the current direction) and changing the direction of the elevator is as easy as: 
+direction = -direction
+
+- An improvement I could make, would be to initialize int[] stopsArray to contain only as many elements as it needs to handle the number of floors in the building (int numbFloors+1, to account for the unused 0 index) rather than just making it arbitrarily large. 
