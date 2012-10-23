@@ -1,5 +1,8 @@
 package cscie160.hw3;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import cscie160.hw3.Elevator;
 import cscie160.hw3.ElevatorFullException;
 import cscie160.hw3.Floor;
@@ -21,47 +24,31 @@ public class Elevator {
 	 * @param waitingQueue the index represents the floor number, indicates that a passenger is waiting to board the elevator at that floor
 	 */
 	int capacity = 10;
-	int numbFloors = 7;
+	static int numbFloors = 7;
 	int currentFloor = 1;
 	int direction = 1;
-	//how many passengers are waiting on the floor to board the elevator
-	int passengers = 0;
-	//Four passengers (one on floor 2, one on floor 3, two on floor 4) all
-	//Destined for floor 7
-	static Floor[] floors = {new Floor(0, 0), new Floor(0, 1), new Floor(1, 2), 
-		new Floor(1, 3), new Floor(2, 4), new Floor(0, 5), new Floor(0, 6), 
-		new Floor(0, 7)};
-	int[] stopsArray = {0, 0, 0, 0, 0, 0, 0, 0};
 
-	boolean[] waitingQueue = {false, false, true, true, true, false, false, false};
+	private static HashSet<Passenger> passengers = new HashSet<Passenger>();
+	private static HashSet<Passenger> unqueuedPassengers = new HashSet<Passenger>();
+
+	//create array lists and hash sets
+	for(int i = 0; i <= numbFloors; i++){
+		System.out.println("Heyo!");
+	}
 	
+
+	//stopsArray represents the buttons on the elevator
+	boolean[] stopsArray = {false, false, false, false, false, false, false, false};
+	
+	//upQueue and downQueue represent the up/down buttons on each floor, outside the elevator
+	boolean[] upQueue = {false, false, false, false, false, false, false, false};
+	boolean[] downQueue = {false, false, false, false, false, false, false, false};
 	public static void main(String[] args) {
 		Elevator myElevator = new Elevator();
+		
 		for(int i = 0; i < 40; i++){
 			System.out.println(myElevator.toString());
 			myElevator.move();
-			if(myElevator.currentFloor == 1){
-				//Temporary measure -- we're assuming all passengers want to
-				//Go down to floor 1. Soon, passengers will be their own class
-				//With a "destination floor" property, but this works for now
-				myElevator.passengers = 0;
-			}
-			if(i == 12){
-				//On the 12th move, as a test of elevator capacity
-				floors[7].addPassenger(myElevator);
-				floors[7].addPassenger(myElevator);
-				floors[7].addPassenger(myElevator);
-				floors[7].addPassenger(myElevator);
-				floors[7].addPassenger(myElevator);
-				floors[7].addPassenger(myElevator);
-				floors[7].addPassenger(myElevator);
-				floors[7].addPassenger(myElevator);
-				floors[7].addPassenger(myElevator);
-				floors[7].addPassenger(myElevator);
-				floors[7].addPassenger(myElevator);
-				floors[7].addPassenger(myElevator);
-				floors[7].addPassenger(myElevator);
-			}
 		}
 	}
 	
@@ -76,8 +63,9 @@ public class Elevator {
 			direction = -direction;
 		}
 		currentFloor = currentFloor+direction;
-		//If there are passengers that need to get off here, let them off, reset things
-		if((stopsArray[currentFloor] != 0) || waitingQueue[currentFloor]){
+		//If passengers need to get off here, or it is heading in a direction that a passenger wants to go
+		boolean stopHere = direction == 1 ? upQueue[currentFloor] : downQueue[currentFloor];
+		if((stopsArray[currentFloor]) || stopHere){
 			stop();
 		}
 	}
@@ -86,6 +74,10 @@ public class Elevator {
 	 * Overrides the toString() method
 	 **/
 	public String toString(){
+		String passengerString = "";
+		for(Passenger passenger in this.passengers){
+			passengerString = passengerString+"\n"+passenger.toString();
+		}
 		return "****\nCurrently "+passengers+" passengers onboardCurrent Floor: "+currentFloor+"\n";
 	}
 	
@@ -98,14 +90,19 @@ public class Elevator {
 	
 	public void stop(){
 		System.out.println("Stopping on floor "+currentFloor);
-		//Let out passengers who want to go to that floor
-		passengers = passengers - stopsArray[currentFloor];
-		stopsArray[currentFloor] = 0;
+		//Create a set of passengers who want to get off on that floor
+		//Each passenger who is getting off resets their current floor
+		ArrayList<Passenger> gettingOff;
+		for(Passenger passenger : passengers){
+			if(passenger.arrive(this)){
+				gettingOff.add(passenger);
+			}
+		}
 		//Elevator sets the waiting queue to false for that floor
 		//(If the capacity limit is hit, floor will set to true)
 		waitingQueue[currentFloor] = false;
 		//Goes to floor to board waiting passengers on the elevator
-		floors[currentFloor].unloadPassengers(this, 1);
+		floors[currentFloor].unloadPassengers(this, gettingOff);
 	}
 	/**
 	 * 
@@ -113,20 +110,33 @@ public class Elevator {
 	 * @return
 	 * @throws ElevatorFullException if the capacity has been reached already
 	 */
-	public boolean boardPassenger(int floor) throws ElevatorFullException{
-		passengers++;
-		stopsArray[floor]++;
-		if (passengers >= capacity) {
-	        throw new ElevatorFullException();
+	public boolean boardPassenger() throws ElevatorFullException{
+		if(direction == 1){
+			//Board passengers heading up
+			floors[currentFloor].upPassengers;
+			for(Passenger passWaiting : floors[currentFloor].upPassengers){
+				System.out.pringln(passWaiting);
+			}
+		}else{
+			//Board passengers heading down
 		}
-	    	return true;
 	}
 	
 	/**
 	 * Analagous to pushing the button outside the elevator
 	 * @param floor indicates the floor the passenger is registering the request from
 	 */
-	public void registerRequest(int floor){
-		waitingQueue[floor] = true;
+	public void registerRequest(int floor, int direction){
+		if(direction == 1){
+			upQueue[floor] = true;
+		}else{
+			downQueue[floor] = true;
+		}
 	}
+	
+	public int totalPassengers(){
+		return passengers.size();
+	}
+	
+	
 }

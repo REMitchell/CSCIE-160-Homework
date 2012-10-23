@@ -1,5 +1,6 @@
 package cscie160.hw3;
-
+import java.util.HashSet;
+import java.util.ArrayList;
 import cscie160.hw3.Elevator;
 import cscie160.hw3.ElevatorFullException;
 
@@ -12,13 +13,19 @@ public class Floor {
 
 	int passengers;
 	int floorNumber;
+	
+	//Should be a hashset?
+	private static HashSet<Passenger> unqueuedPassengers = new HashSet<Passenger>();
+	
+	//Should be arraylists
+	static ArrayList<Passenger> upPassengers = new ArrayList<Passenger>();
+	static ArrayList<Passenger> downPassengers = new ArrayList<Passenger>();
 	public Floor(int passengers, int floorNumber){
 		this.passengers = passengers;
 		this.floorNumber = floorNumber;
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 	}
 	
@@ -28,7 +35,13 @@ public class Floor {
 	 * @param destFloor the floor the passenger wants to get off on
 	 * @return boolean successful in loading all passengers or not. Not currently used
 	 */
-	public boolean unloadPassengers(Elevator anElevator, int destFloor){
+	//TODO: Overhaul to accept a collection of passengers from elevator
+	public boolean unloadPassengers(Elevator anElevator, ArrayList<Passenger> newPassengers){
+		//All passengers bound for this floor exit
+		for(Passenger newPassenger : newPassengers){
+			unqueuedPassengers.add(newPassenger);
+		}
+		
 		//Boards a passenger, resets floors passengers if successful
 		while(passengers > 0){
 			try{
@@ -59,5 +72,11 @@ public class Floor {
 	public void addPassenger(Elevator anElevator){
 		passengers++;
 		anElevator.registerRequest(floorNumber);
+	}
+	public Passenger[] getUpPassengers(){
+		return upPassengers;
+	}
+	public Passenger[] getDownPassengers(){
+		return downPassengers;
 	}
 }
