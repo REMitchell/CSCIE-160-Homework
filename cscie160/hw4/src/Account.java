@@ -31,5 +31,15 @@ public class Account {
 	public void setBalance(float amount){
 		balance = amount;
 	}
+	//Classic beginner mistake (from teaching session)
+	/*public void deposit(float amount){
+		try{
+			if(amount > 0){
+				balance += amount;
+			}
+		}else{
+			//Do a thing
+		}
+	}*/
 
 }
