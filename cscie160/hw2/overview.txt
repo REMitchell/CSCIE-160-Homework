@@ -1,0 +1,195 @@
+﻿There were some artificial limitations placed on the program because of the lack of an intelligent “passenger” object. The desired destination floor of the passenger needed to be passed in awkward ways, for example, to Floor.unloadPassengers() -- it didn’t matter how many passengers were boarding the elevator, they all had to go to the same destination floor that was passed to the method. Alternatively, I could have passed an array, int[] floorDestinations, to Floor (one destination for each passenger object) but I felt that this would be complicated an unwieldy considering that we would be rewriting the code to accommodate a passenger object in the next assignment. 
+
+
+Similarly, Elevator.stopsArray was still used by the elevator to keep track of which floors passengers were departing to. An array of passenger objects, each containing their destination would be far more elegant. 
+However, not having a passenger object, and a somewhat contrived list of destinations (starting with a few passengers going to the 7th floor, all other passengers going to the 1st floor, for example) works fine for testing purposes.
+
+
+The waiting queue (boolean[] waitingQueue) was used to represent the lighted buttons (usually up and down, in this case, just “on” or “off”) outside the elevator. I think I will use this representation moving forward as well.
+
+
+Program output: 
+****
+Currently 0 passengers onboardCurrent Floor: 1
+
+
+Stopping on floor 2
+Passenger boarding elevator. There are 1 passengers on the elevator and 0 on floor
+****
+Currently 1 passengers onboardCurrent Floor: 2
+
+
+Stopping on floor 3
+Passenger boarding elevator. There are 2 passengers on the elevator and 0 on floor
+****
+Currently 2 passengers onboardCurrent Floor: 3
+
+
+Stopping on floor 4
+Passenger boarding elevator. There are 3 passengers on the elevator and 1 on floor
+Passenger boarding elevator. There are 4 passengers on the elevator and 0 on floor
+****
+Currently 4 passengers onboardCurrent Floor: 4
+
+
+****
+Currently 4 passengers onboardCurrent Floor: 5
+
+
+****
+Currently 4 passengers onboardCurrent Floor: 6
+
+
+****
+Currently 4 passengers onboardCurrent Floor: 7
+
+
+****
+Currently 4 passengers onboardCurrent Floor: 6
+
+
+****
+Currently 4 passengers onboardCurrent Floor: 5
+
+
+****
+Currently 4 passengers onboardCurrent Floor: 4
+
+
+****
+Currently 4 passengers onboardCurrent Floor: 3
+
+
+****
+Currently 4 passengers onboardCurrent Floor: 2
+
+
+Stopping on floor 1
+****
+Currently 0 passengers onboardCurrent Floor: 1
+
+
+****
+Currently 0 passengers onboardCurrent Floor: 2
+
+
+****
+Currently 0 passengers onboardCurrent Floor: 3
+
+
+****
+Currently 0 passengers onboardCurrent Floor: 4
+
+
+****
+Currently 0 passengers onboardCurrent Floor: 5
+
+
+****
+Currently 0 passengers onboardCurrent Floor: 6
+
+
+Stopping on floor 7
+Passenger boarding elevator. There are 1 passengers on the elevator and 12 on floor
+Passenger boarding elevator. There are 2 passengers on the elevator and 11 on floor
+Passenger boarding elevator. There are 3 passengers on the elevator and 10 on floor
+Passenger boarding elevator. There are 4 passengers on the elevator and 9 on floor
+Passenger boarding elevator. There are 5 passengers on the elevator and 8 on floor
+Passenger boarding elevator. There are 6 passengers on the elevator and 7 on floor
+Passenger boarding elevator. There are 7 passengers on the elevator and 6 on floor
+Passenger boarding elevator. There are 8 passengers on the elevator and 5 on floor
+Passenger boarding elevator. There are 9 passengers on the elevator and 4 on floor
+Elevator is full! Leaving 4 behind
+****
+Currently 10 passengers onboardCurrent Floor: 7
+
+
+****
+Currently 10 passengers onboardCurrent Floor: 6
+
+
+****
+Currently 10 passengers onboardCurrent Floor: 5
+
+
+****
+Currently 10 passengers onboardCurrent Floor: 4
+
+
+****
+Currently 10 passengers onboardCurrent Floor: 3
+
+
+****
+Currently 10 passengers onboardCurrent Floor: 2
+
+
+Stopping on floor 1
+****
+Currently 0 passengers onboardCurrent Floor: 1
+
+
+****
+Currently 0 passengers onboardCurrent Floor: 2
+
+
+****
+Currently 0 passengers onboardCurrent Floor: 3
+
+
+****
+Currently 0 passengers onboardCurrent Floor: 4
+
+
+****
+Currently 0 passengers onboardCurrent Floor: 5
+
+
+****
+Currently 0 passengers onboardCurrent Floor: 6
+
+
+Stopping on floor 7
+Passenger boarding elevator. There are 1 passengers on the elevator and 3 on floor
+Passenger boarding elevator. There are 2 passengers on the elevator and 2 on floor
+Passenger boarding elevator. There are 3 passengers on the elevator and 1 on floor
+Passenger boarding elevator. There are 4 passengers on the elevator and 0 on floor
+****
+Currently 4 passengers onboardCurrent Floor: 7
+
+
+****
+Currently 4 passengers onboardCurrent Floor: 6
+
+
+****
+Currently 4 passengers onboardCurrent Floor: 5
+
+
+****
+Currently 4 passengers onboardCurrent Floor: 4
+
+
+****
+Currently 4 passengers onboardCurrent Floor: 3
+
+
+****
+Currently 4 passengers onboardCurrent Floor: 2
+
+
+Stopping on floor 1
+****
+Currently 0 passengers onboardCurrent Floor: 1
+
+
+****
+Currently 0 passengers onboardCurrent Floor: 2
+
+
+****
+Currently 0 passengers onboardCurrent Floor: 3
+
+
+****
+Currently 0 passengers onboardCurrent Floor: 4
