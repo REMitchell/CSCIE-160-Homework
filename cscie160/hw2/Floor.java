@@ -7,8 +7,8 @@ public class Floor {
 	 * @param floorNumber The floor level (frequently used as a reference by the elevator)
 	 */
 
-	int passengers;
-	int floorNumber;
+	public int passengers;
+	public int floorNumber;
 	public Floor(int passengers, int floorNumber){
 		this.passengers = passengers;
 		this.floorNumber = floorNumber;

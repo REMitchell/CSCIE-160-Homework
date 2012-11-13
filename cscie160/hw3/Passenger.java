@@ -1,9 +1,11 @@
 package cscie160.hw3;
 
+import cscie160.hw3.Elevator.Direction;
+
 public class Passenger {
 	private int currentFloor;
 	private int destFloor;
-	private int direction;
+	private Direction direction;
 	
 	
 	public static void main(String[] args) {
@@ -14,9 +16,9 @@ public class Passenger {
 		this.currentFloor = currentFloor;
 		this.destFloor = destFloor;
 		if(destFloor >= currentFloor){
-			this.direction = 1;
+			this.direction = Direction.UP;
 		}else{
-			this.direction = -1;
+			this.direction = Direction.DOWN;
 		}
 	}
 	
@@ -27,35 +29,22 @@ public class Passenger {
 	public int getCurrentFloor(){
 		return currentFloor;
 	}
-	/**
-	 * Used to create a new destination for passenger who wishes to
-	 * take a particular elevator
-	 * @param anElevator Elevator the passenger would like to ride
-	 */
-	private void newDestination(Elevator anElevator){
-		//Look up randInt stuff, use anElevator.numFloors
-		this.destFloor = 4;
-		if(destFloor >= currentFloor){
-			this.direction = 1;
-		}else{
-			this.direction = -1;
-		}
-	}
-	
+
 	public boolean arrive(Elevator anElevator){
 		if(anElevator.currentFloor == destFloor){
 			this.currentFloor = this.destFloor;
-			this.direction = 0;
+			this.direction = null;
 			return true;
 		}else{
 			return false;
 		}
 	}
+	
 	/**
 	 * Overrides the toString method. 
 	 */
 	
 	public String toString(){
-		return "Passenger heading "+direction+" for "+destFloor+"\n";
+		return "Passenger on floor "+currentFloor+" heading "+direction+" for floor "+destFloor;
 	}
 }

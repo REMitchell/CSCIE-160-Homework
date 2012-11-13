@@ -1,9 +1,15 @@
 package cscie160.hw2;
+import cscie160.hw1.Elevator.Direction;
 
 /**
+ * Represents an elevator with a certain carrying capacity, 
+ * Currently uses a sweeping algorithm, traveling up until it reaches the top
+ * of the building, and back down, carrying passengers and dropping them off
+ * along the way, with no modification based on passenger destination
  * @author ryanmitchell
- *
+ * @version 2.0 Oct 25, 2012
  */
+
 public class Elevator {
 	
 	/**
@@ -16,20 +22,26 @@ public class Elevator {
 	 * @param stopsArray the index represents the floor number, the value, how many passengers have that floor as a destination
 	 * @param waitingQueue the index represents the floor number, indicates that a passenger is waiting to board the elevator at that floor
 	 */
-	int capacity = 10;
-	int numbFloors = 7;
-	int currentFloor = 1;
-	int direction = 1;
-	//how many passengers are waiting on the floor to board the elevator
-	int passengers = 0;
+	private static final int CAPACITY = 10;
+	private static final int NUMBFLOORS = 7;
+	public int currentFloor = 1;
+	Direction direction = Direction.UP;
+	public int passengers = 0;
 	//Four passengers (one on floor 2, one on floor 3, two on floor 4) all
 	//Destined for floor 7
-	static Floor[] floors = {new Floor(0, 0), new Floor(0, 1), new Floor(1, 2), 
+	public static Floor[] floors = {new Floor(0, 0), new Floor(0, 1), new Floor(1, 2), 
 		new Floor(1, 3), new Floor(2, 4), new Floor(0, 5), new Floor(0, 6), 
 		new Floor(0, 7)};
-	int[] stopsArray = {0, 0, 0, 0, 0, 0, 0, 0};
+	public int[] stopsArray = {0, 0, 0, 0, 0, 0, 0, 0};
 
 	boolean[] waitingQueue = {false, false, true, true, true, false, false, false};
+	
+	/**
+	 * Provides a simple test for the elevator, moves 40 times, board and let off
+	 * existing passengers, board 12 passengers on the 7th floor, after 12 moves
+	 * to test elevator capacity and error handling
+	 * @param args
+	 */
 	
 	public static void main(String[] args) {
 		Elevator myElevator = new Elevator();
@@ -62,24 +74,33 @@ public class Elevator {
 	}
 	
 	/**
-	 * This method is called to move the elevator a single floor
-	 * If the elevator reaches the top or bottom of the building, 
-	 * it will change direction
-	 **/
+	 * move called to move the elevator a single floor
+	 * The elevator moves first and, if it reaches the top or bottom
+	 * of the building, it will change direction and move in the opposite
+	 * direction on its next move. It checks to see if passengers need
+	 * to be let out, or if passengers are waiting to board after moving
+	 */
+
 	public void move(){
-		if(currentFloor == numbFloors && direction == 1 || currentFloor == 1 && direction == -1){
-			//Cannot move any more. Change direction and continue
-			direction = -direction;
+		if(direction == Direction.DOWN){
+			currentFloor--;
+		}else{
+			currentFloor++;
 		}
-		currentFloor = currentFloor+direction;
-		//If there are passengers that need to get off here, let them off, reset things
+		if(currentFloor == NUMBFLOORS){
+			direction = Direction.DOWN;
+		}
+		else if(currentFloor == 1){
+			direction = Direction.UP;
+		}
 		if((stopsArray[currentFloor] != 0) || waitingQueue[currentFloor]){
 			stop();
-		}
+		}		
 	}
 	
 	/**
 	 * Overrides the toString() method
+	 * @param String returns the current state of the elevator
 	 **/
 	public String toString(){
 		return "****\nCurrently "+passengers+" passengers onboardCurrent Floor: "+currentFloor+"\n";
@@ -94,6 +115,7 @@ public class Elevator {
 	
 	public void stop(){
 		System.out.println("Stopping on floor "+currentFloor);
+		System.out.println(toString());
 		//Let out passengers who want to go to that floor
 		passengers = passengers - stopsArray[currentFloor];
 		stopsArray[currentFloor] = 0;
@@ -104,15 +126,16 @@ public class Elevator {
 		floors[currentFloor].unloadPassengers(this, 1);
 	}
 	/**
-	 * 
+	 * Boards a passenger onto the elevator, throws ElevatorFullException()
+	 * if the capacity of the elevator has been reached
 	 * @param floor indicates the floor destination floor of the boarding passenger
-	 * @return
+	 * @return true on success
 	 * @throws ElevatorFullException if the capacity has been reached already
 	 */
 	public boolean boardPassenger(int floor) throws ElevatorFullException{
 		passengers++;
 		stopsArray[floor]++;
-		if (passengers >= capacity) {
+		if (passengers >= CAPACITY) {
 	        throw new ElevatorFullException();
 		}
 	    	return true;

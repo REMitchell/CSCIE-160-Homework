@@ -4,7 +4,6 @@ There were few real decisions to make when completing this assignment, as most t
 Notice that the 0 index of this array is unused under this system. I considered using “floor-1” as the index, which would use the array completely, however opted to make the array one element longer than it needed to be, to make things simpler (and who knows -- we may need a basement level at some point)
 Of course, I could take the sum of the elements in int[] stopsArray to get int passengers, however, I felt that the tradeoff of increased memory usage over increased computation time was a fair one, and opted to store the total number of passengers separately.
 
-- Direction is stored as an integer, 1 or -1, rather than a string “up” or “down” or some other representation. This makes it trivial to implement the “move” function (simply add the current floor to the current direction) and changing the direction of the elevator is as easy as: 
-direction = -direction
+- Direction is stored as an enum, {UP, DOWN}, which makes code using the direction more readable, and is easier to print quickly if I need to display the direction of the elevator
 
 - An improvement I could make, would be to initialize int[] stopsArray to contain only as many elements as it needs to handle the number of floors in the building (int numbFloors+1, to account for the unused 0 index) rather than just making it arbitrarily large. 
