@@ -16,7 +16,7 @@ public class Server
 		// Anonymous no-op implementation of interface ATM as place-holder
 		// here.  Replace it with a real ATMImplementation that holds an
 		// Account object and manages it.
-		atmImplementation = new ATMImplementation();
+		//atmImplementation = new ATMImplementation();
 		/*atmImplementation = new ATM() 
 		{
 			public void deposit(float amount) throws ATMException {}

@@ -1,0 +1,75 @@
+<project name="atm" default="jar">
+    <property name="build.source" value="../source/cscie160/hw4"/>
+    <property name="build.classes" value="classes/cscie160/hw4"/>
+	<property name="build.jar" value="jar"/>
+	
+	<property name="test.source" value="../test/classes/cscie160/hw4"/>
+	<property name="test" value="../test/source/cscie160/hw4"/>
+	<property name="test.jar" value="../test/jar"/>
+
+	<!-- Compile application -->
+	<target name="compile">
+			<mkdir dir="${build.classes}" />
+			<javac srcdir="${build.source}" destdir="${build.classes}" />
+	</target>
+
+	
+	<target name="compileTest">
+			<mkdir dir="${test.classes}" />
+			<javac srcdir="${test.source}" destdir="${test.classes}" />
+	</target>
+			
+	<!-- Creates jar file for application -->
+	<target name="jar" depends="compile">
+			<mkdir dir="${build.jar}" />
+			<jar destfile="${build.jar}/hw4.jar" basedir="${build.classes}" />
+			<!-- No manifest needed. Application will be launched by hand -->
+	</target>
+	
+	<target name="jarTest" depends="compileTest">
+			<mkdir dir="${test.jar}" />
+			<jar destfile="${test.jar}/hw4.jar" basedir="${test.classes}" />
+			<!-- No manifest needed. Application will be launched by hand -->
+	</target>
+	
+	<!-- Clean all created class files -->
+	<target name="clean" depends="jar">
+		<delete file="${build.source}/*.class"/>
+		<delete dir="${build.classes}" />
+		<delete dir="${test.classes}" />
+		<delete file="${test.source}/*.class"/>
+	</target>
+	
+	
+	<!-- Classpath settings for junit tests -->
+	<!--
+	junit test code, below, does not currently work, because of 
+	classpath settings. 
+	TestAccount and TestATMImplementation can be run
+	automatically, but TestATMProxy must be run by hand
+	-->
+	<path id="test.classpath">
+		<pathelement location="${test.classes}" />
+		<pathelement location="${build.classes}" />
+		<fileset dir="lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	
+	<target name="testAccount">
+		<junit fork="no" haltonfailure="yes">
+			<test name="cscie160.hw4.TestAccount" />
+			<formatter type="plain" usefile="false" />
+			<classpath refid="test.classpath" />
+		</junit>
+	</target>
+	
+	<target name="testATMImplementation" depends="testAccount">
+		<junit fork="no" haltonfailure="yes">
+			<test name="cscie160.hw4.TestATMImplementation" />
+			<formatter type="plain" usefile="false" />
+			<classpath refid="test.classpath" />
+		</junit>
+	</target>
+	
+</project>

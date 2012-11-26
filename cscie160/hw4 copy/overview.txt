@@ -1,0 +1,11 @@
+Ryan Mitchell
+CSCIE160 HW4
+
+
+There weren’t a lot of design decisions that needed to be made in HW4, however, the unit tests provided some challenges. 
+I wanted the individual methods in the tests to be as independent as possible from each other in order to provide flexibility and avoid one method failing because of an error (perhaps causing an incorrectly set variable in an object that gets passed from method to method, where the value is different than the assumed value) in another method, leading to confusion about where the problem originated. 
+For this reason, I avoided public and static shared variables where possible. For example, I created a new ATMImplementation for every method in TestATMImplementation, rather than have one instance that is shared between every method. 
+Creating shared objects and variables was unavoidable in TestATMProxy, however, given the complexities of dealing with a server that expects to receive continuous communication. I was forced to do all calculations and server calls in a new method “startUp,” that ran first while only the testing logic was stored in stored in the testBalance/Withdraw/Deposit functions. 
+The "startUp" method was put to good use, however, and tested other conditions, such as the ATMProxy starting up correctly.
+
+The Account class is extremely simple, and is essentially a wrapper around a float representing the account balance, with getter and setter methods.

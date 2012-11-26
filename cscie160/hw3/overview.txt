@@ -1,0 +1,18 @@
+﻿Ryan Mitchell
+CSCIE160 HW3
+
+
+In the interest of fairness, I wanted to create a “first one to get there, first one on” policy for my elevator. So, rather than implementing an unsorted hash or list, I chose an ArrayList to keep track of passengers waiting to go up and down on the elevator (in the event the elevator was full). Although these collections can get expensive with large numbers of elements, the fact that they were limited to 10 passengers made them a reasonable choice.
+
+
+Because all passengers are able to leave the elevator when it stops at the floor they want to get off at, and an ordered queue for passengers milling around the floor doesn’t make sense, I used a hashSet for unqueuedPassengers. HashSets also scale well in performance with large numbers of of elements, and, because the number of people in the building (therefore the number of people on a single floor in the building) may become quite large, I thought it was a good choice of collection type.
+
+
+In addition, the passengers on board the elevator were a HashSet. Although it was a little trickier to iterate through when deciding if a passenger needed to get off at a particular stop, or stay on board, the fact that all passengers who wanted to leave the elevator could (there was no need to “wait in line”) meant that an unordered HashSet would be appropriate. 
+
+
+I used a random number generator to determine the number of passengers waiting on each floor, and to determine their destination floor (if their destination floor was the same as their current floor, they were “happy” and remained in the unqueued passenger list). In order to test the carrying capacity of the elevator, I added 10 passengers on floor 5, heading down to floor 2 (the floors were arbitrary). 
+
+
+One major change in this iteration of the elevator was the use of Elevator.upQueue and Elevator.downQueue, rather than Elevator.waitingQueue to represent if the elevator should stop on a particular floor or not. This made it convenient for the elevator to only stop if it was heading in the appropriate direction for the passengers waiting for it. The up/downQueues are directly analogous to the “call elevator” lights on the outside of elevator doors. 
+Elevator.stopsArray remained, and was analogous to the floor buttons on the inside of an elevator car.
