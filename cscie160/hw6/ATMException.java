@@ -1,5 +1,6 @@
 package cscie160.hw6;
 
+
 public class ATMException extends Exception 
 {
     public ATMException(String msg) 

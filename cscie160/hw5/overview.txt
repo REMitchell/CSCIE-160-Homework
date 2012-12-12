@@ -1,0 +1,19 @@
+Ryan Mitchell
+CSCIE160 HW5
+
+One decision that went against the letter of the homework assignment: I decided that the best representation of Accounts with corresponding account numbers was a Map, which required Integer account numbers, rather than int account numbers (as Maps cannot store primitives) This required the modification of several classes, to change account numbers to Integers, rather than ints. Despite this change, the project runs smoothly, and with the expected inputs and outputs. 
+
+Although I didn't do this in HW4, I added checks to the withdraw and deposit methods, to make sure that the amount being withdrawn and deposited was positive, and that the balance would not go below zero when the account was withdrawn from. 
+This meant that I needed to to get the output (a boolean converted to a string, "true," or "false" in ATMImpl, which involved adding try/catch statements, checking the output, and returning the appropriate boolean based on it. Not much is done with these booleans, but they might be used to return error messages in the future. 
+
+In addition, I added two new test classes, TestATMImpl and TestATMFactory. TestATMFactory is fairly straightforward -- it confirms that an ATM object is returned. TestATMImpl is similar to TestATMImplementation in HW4. It tests that the getBalance, withdraw, and deposit methods all perform correctly.
+
+The downside to the TestATMImpl test is that it depends on too many hard-coded variables -- namely account number (0000002) and the starting balance (100.00). In the future, it would be nice to be able to dynamically create some accounts with given account numbers, as well as starting balances, but creating a "createAccount" method in ATMImpl simply for testing purposes may create some security problems in our imaginary banking system…
+
+To run this project, start up three terminal windows (see hw5_screenshot.png), and navigate to the "source" directory in the extracted jar file. 
+Window 1: Start the rmiregistry
+Window 2: Start cscie160.hw5.Server
+Window 3: Start cscie160.hw5.Client (output should show from client after client is run)
+
+Additionally, unit tests cscie160.hw5.TestATMFactory and cscie160.hw5.TestATMImpl can be run using junit.
+
