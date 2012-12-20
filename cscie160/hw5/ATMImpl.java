@@ -11,6 +11,11 @@ import java.util.Map;
  * @author ryanmitchell
  *
  */
+
+/**
+
+ *
+ */
 public class ATMImpl extends UnicastRemoteObject implements ATM{
 
 	/**

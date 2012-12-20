@@ -5,6 +5,7 @@ package cscie160.Project;
  *  It should verify the appropriate funds are available in the Account.
  * @param args
  */
+//REMOTE
 public class Account {
 
 	private float balance;

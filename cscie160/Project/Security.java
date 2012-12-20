@@ -8,6 +8,7 @@ package cscie160.Project;
  * @author ryanmitchell
  *
  */
+//REMOTE. Represents the client
 public class Security {
 	Map<Integer accountNum, Integer pin> authValues;
 	

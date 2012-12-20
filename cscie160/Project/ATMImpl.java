@@ -6,24 +6,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Represents a remote ATM object with three accounts stored in a Map<int, Account>, representing
- * an account number and a corresponding account object
+ *First, notify each of the ATMListeners with a TransactionNotification indicating that it is about to process the operation
+ *Then, requires an AccountInfo object as a parameter and authenticates with the remote Security service
+ */
+/**
+ * [notify all registered listeners of the transaction]
+   [use security service to authenticate account info]
+   [use security service to authorize operation on account]
+   [use bank to obtain account reference(s)]
+   [use account reference(s) to perform transaction]
  * @author ryanmitchell
  *
  */
 public class ATMImpl extends UnicastRemoteObject implements ATM{
 
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	/**
 	 * @param args
 	 */
 	private Map<Integer, Account> accounts;
-
+	private int cashOnHand;
     public ATMImpl() throws RemoteException {
-    	super();
+    	cashOnHand = 500;
     	accounts = new HashMap<Integer, Account>();
 		//Create some accounts, store them in a map
 		accounts.put(new Integer(0000001), new Account((float) 0.00));
@@ -63,15 +66,18 @@ public class ATMImpl extends UnicastRemoteObject implements ATM{
 	/**
 	 * Withdraws a given amount from the Account corresponding to the provided Integer accountNum
 	 */
-	public boolean withdraw(Integer accountNum, float amount){
-		if(amount < 0.00){
+	public boolean withdraw(Account account, float amount){
+		if(amount < 0.00 || amount > account.getBalance()){
+			return false;
+		}
+		if(amount > cashOnHand){
 			return false;
 		}
 		Account myAccount = accounts.get(accountNum);
 		float startBalance = myAccount.getBalance();
 		//If the account will not be overdrawn
 		if(startBalance - amount >= 0.00){
-			myAccount.setBalance(startBalance-amount);
+			balance = balance-amount;
 			return true;
 		}else{
 			return false;

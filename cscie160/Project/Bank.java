@@ -5,7 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cscie160.hw5.Account;
+//REMOTE
 
+/**
+ * The Bank is a remote object that hosts remote Account objects. 
+ * It should provide a method to obtain a reference to a remote Account.
+ * @author ryanmitchell
+ *
+ */
 public class Bank {
 
 	Map<Integer, Integer> accounts;
