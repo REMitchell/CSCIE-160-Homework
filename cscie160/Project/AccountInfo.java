@@ -1,10 +1,16 @@
 package cscie160.Project;
 
-public class AccountInfo {
+import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
-	private static Integer accountNum;
-	private static Integer pin;
-	public AccountInfo(Integer myAccountNum, Integer myPin) {
+//import java.io.Serializable;
+
+public class AccountInfo implements Serializable{
+
+	private final String accountNum;
+	private final Integer pin;
+	public AccountInfo(String myAccountNum, Integer myPin){
 		// TODO Auto-generated constructor stub
 		accountNum = myAccountNum;
 		pin = myPin;
@@ -16,6 +22,13 @@ public class AccountInfo {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public Integer getPin(){
+		return pin;
+	}
+	public String getAccountNum(){
+		return accountNum;
 	}
 
 }

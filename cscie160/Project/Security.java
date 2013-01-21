@@ -1,5 +1,7 @@
 package cscie160.Project;
 
+import java.rmi.RemoteException;
+
 /**
  * The Security component is a remote object that has 
  * methods for authenticating AccountInfo objects and 
@@ -9,19 +11,11 @@ package cscie160.Project;
  *
  */
 //REMOTE. Represents the client
-public class Security {
-	Map<Integer accountNum, Integer pin> authValues;
-	
-	public Security() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
+public interface Security extends java.rmi.Remote {
+	public boolean authenticatePin(String accountNum, Integer Pin) throws AuthorizationException, RemoteException;
+	public boolean authorizeDeposit(String accountNum) throws AuthorizationException,RemoteException ;
+	public boolean authorizeWithdraw(String accountNum) throws AuthorizationException, RemoteException;
+	public boolean authorizeBalance(String accountNum) throws AuthorizationException, RemoteException;
+	public boolean authorizeTransfer(String fromAccountNum, String toAccountNum) throws AuthorizationException, RemoteException;
 
 }
